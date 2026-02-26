@@ -11,7 +11,7 @@ using Mission_8_Group_7.Data;
 namespace Mission_8_Group_7.Migrations
 {
     [DbContext(typeof(TaskContext))]
-    [Migration("20260226155745_Initial")]
+    [Migration("20260226162731_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
