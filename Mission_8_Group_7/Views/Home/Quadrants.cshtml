@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Mission_8_Group_7.Models.TaskItem>
+
+@using System.Linq
+
+@{
+    // Define the quadrants as (number, title)
+    var quadrants = new List<(int Number, string Title)>
+    {
+        (1, "Quadrant I: Important / Urgent"),
+        (2, "Quadrant II: Important / Not Urgent"),
+        (3, "Quadrant III: Not Important / Urgent"),
+        (4, "Quadrant IV: Not Important / Not Urgent")
+    };
+}
+
+<!-- Quadrant colors -->
+<style>
+    .quadrant-1 .card { background-color: #f8d7da; }   /* light red */
+    .quadrant-2 .card { background-color: #d1ecf1; }   /* light blue */
+    .quadrant-3 .card { background-color: #fff3cd; }   /* light yellow */
+    .quadrant-4 .card { background-color: #d4edda; }   /* light green */
+
+    .card-body h5 {
+        font-weight: bold;
+    }
+
+    .card:hover {
+        transform: scale(1.02);
+        transition: transform 0.2s;
+    }
+</style>
+
+<div class="container">
+    @for (int i = 0; i < quadrants.Count; i += 2) // 2 columns per row
+    {
+        <div class="row mb-4">
+            @for (int j = i; j < i + 2 && j < quadrants.Count; j++)
+            {
+                var q = quadrants[j];
+                <div class="col-md-6 quadrant-@q.Number">
+                    <h3>@q.Title</h3>
+
+                    @foreach (var t in Model.Where(x => x.Quadrant == q.Number && !x.Completed))
+                    {
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5>@t.Task</h5>
+                                <p>Due: @t.DueDate?.ToShortDateString()</p>
+                                <p>Category: @t.Category.CategoryName</p>
+
+                                <form asp-action="MarkComplete" method="get" class="d-inline">
+                                    <input type="hidden" name="id" value="@t.TaskItemId" />
+                                    <button type="submit" class="btn btn-sm btn-success">Complete</button>
+                                </form>
+
+                                <a asp-action="AddEdit" asp-route-id="@t.TaskItemId" class="btn btn-sm btn-warning">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@t.TaskItemId" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
