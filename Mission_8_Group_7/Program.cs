@@ -4,6 +4,7 @@ using Mission_8_Group_7.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register MVC and app services.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<TaskContext>(options =>

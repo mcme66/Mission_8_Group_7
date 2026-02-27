@@ -16,6 +16,7 @@ namespace Mission_8_Group_7.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Seed default categories and starter tasks.
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryId = 1, CategoryName = "Home" },
                 new Category { CategoryId = 2, CategoryName = "School" },

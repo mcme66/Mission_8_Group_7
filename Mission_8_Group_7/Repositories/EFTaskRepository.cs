@@ -6,6 +6,7 @@ namespace Mission_8_Group_7.Repositories
 {
     public class EFTaskRepository : ITaskRepository
     {
+        // Central EF Core access layer for task data.
         private TaskContext _context;
 
         public EFTaskRepository(TaskContext context)
